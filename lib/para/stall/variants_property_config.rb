@@ -7,6 +7,7 @@ module Para
         @resource = resource
         @property_name = property_name
         @relation = options[:relation]
+        @variants = options[:variants]
 
         @property_model = if (model_name = options[:model_name])
           model_name.constantize
@@ -15,16 +16,18 @@ module Para
         end
       end
 
-      def options
+      def options(with_data: true)
         property_model.all.map do |property|
           name = property_name_for(property)
 
-          [
-            name,
-            property.id,
+          item = [name, property.id]
+
+          item << {
             selected: property_used?(property),
             data: { name: name }
-          ]
+          } if with_data
+
+          item
         end
       end
 
@@ -42,6 +45,10 @@ module Para
         nil
       end
 
+      def property_value_for(variant)
+        variant.send(property_name)
+      end
+
       private
 
       def variant_model
@@ -56,8 +63,12 @@ module Para
         (variants = variants_by_property[property]) && variants.any?
       end
 
+      def variants
+        @variants ||= resource.send(relation)
+      end
+
       def variants_by_property
-        @variants_by_property ||= resource.send(relation).each_with_object({}) do |variant, hash|
+        @variants_by_property ||= variants.each_with_object({}) do |variant, hash|
           if (property = variant.send(property_name))
             hash[property] ||= []
             hash[property] << variant

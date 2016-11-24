@@ -9,7 +9,8 @@
         %i.checkbox-icon
 
   - properties.each do |property_config|
-    - property = form.object.send(property_config.property_name)
+    - property = property_config.property_value_for(form.object)
+
     %td{ data: { :'variants-matrix-variant-property' => property_config.property_name } }
       %span{ data: { :'property-name' => true } }
         = property_config.property_name_for(property)

@@ -1,1 +1,1 @@
-#= require para/stall/inputs/variants_matrix
+#= require para/stall/inputs/variants-matrix

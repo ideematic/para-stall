@@ -3,7 +3,9 @@ module Para
     module Inputs
       extend ActiveSupport::Autoload
 
+      autoload :VariantInputHelper
       autoload :VariantsMatrixInput
+      autoload :VariantSelectInput
     end
   end
 end

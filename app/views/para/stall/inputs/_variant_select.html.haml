@@ -1,0 +1,10 @@
+.variant-select-input{ data: { :'variant-select-input' => true, :'variant-select-data' => variants_data.to_json } }
+  = form.hidden_field foreign_key, data: { :'variant-select-foreign-key' => true }
+
+  - properties.each do |property_config|
+    .variant-select-property{ data: { :'variant-select-property' => property_config.property_name } }
+      = label :property_config, property_config.property_name, property_config.property_model.model_name.human, class: 'variant-select-label'
+      = collection_radio_buttons :property_config, property_config.property_name, property_config.options(with_data: false), :last, :first, {}, autocomplete: 'off' do |radio|
+        = radio.label class: 'variant-select-radio', data: { :'variant-select-radio' => true } do
+          = radio.radio_button
+          = radio.text

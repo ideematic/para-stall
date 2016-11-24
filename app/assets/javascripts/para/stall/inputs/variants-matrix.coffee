@@ -1,8 +1,8 @@
 #= require_self
-#= require ./variants_matrix/helpers
-#= require ./variants_matrix/nested_fields
-#= require ./variants_matrix/input
-#= require ./variants_matrix/variant
+#= require ./variants-matrix/helpers
+#= require ./variants-matrix/nested-fields
+#= require ./variants-matrix/input
+#= require ./variants-matrix/variant
 
 @VariantsMatrix = {}
 

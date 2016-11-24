@@ -2,10 +2,10 @@ module Para
   module Stall
     module Inputs
       class VariantsMatrixInput < SimpleForm::Inputs::Base
+        include VariantInputHelper
+
         def input(wrapper_options = nil)
           ensure_target_relation_present!
-
-          puts "Reordered variants : #{ variants.map(&:name).inspect }"
 
           template.render partial: 'para/stall/inputs/variants_matrix', locals: {
             form: @builder,
@@ -21,17 +21,14 @@ module Para
 
         private
 
-        def resource
-          @resource ||= @builder.object
-        end
-
-        def model
-          @model ||= resource.class
-        end
-
         def properties
           @properties ||= options[:properties].map do |property_name, model_name|
-            VariantsPropertyConfig.new(resource, property_name, relation: attribute_name, model_name: model_name)
+            VariantsPropertyConfig.new(
+              resource,
+              property_name,
+              relation: attribute_name,
+              model_name: model_name
+            )
           end
         end
 
@@ -58,25 +55,6 @@ module Para
             properties: properties,
             dom_identifier: dom_identifier
           }
-        end
-
-        def variant_sort_method(variant)
-          sort_key = properties.map do |property_config|
-            property = variant.send(property_config.property_name)
-            property_config.property_name_for(property).try(:parameterize)
-          end.join(':')
-
-          puts "Sort key \"#{ sort_key }\" for variant : #{ variant.inspect }"
-          sort_key
-        end
-
-        # Raises a comprehensive error for easy wrong form attribute catching
-        #
-        def ensure_target_relation_present!
-          unless model.reflect_on_association(attribute_name)
-            raise NoMethodError,
-              "Relation ##{ attribute_name } does not exist for model #{ model.name }."
-          end
         end
       end
     end
