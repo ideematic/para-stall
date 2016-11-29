@@ -16,18 +16,22 @@ module Para
         end
       end
 
-      def options(with_data: true)
+      def options
         property_model.all.map do |property|
           name = property_name_for(property)
 
-          item = [name, property.id]
-
-          item << {
+          [
+            name,
+            property.id,
             selected: property_used?(property),
             data: { name: name }
-          } if with_data
+          ]
+        end
+      end
 
-          item
+      def available_options
+        @available_options ||= variants_by_property.keys.map do |property|
+          [property_name_for(property), property.id]
         end
       end
 

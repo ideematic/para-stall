@@ -22,7 +22,12 @@ class VariantSelectInput extends Vertebra.View
     @$properties.each (i, el) ->
       $property = $(el)
       name = $property.data('variant-select-property')
-      value = $property.find('input:checked, select').val()
+
+      value = if $property.is('[data-preselected]')
+        $property.find('[data-preselected-value]').val()
+      else
+        $property.find('input:checked, select').val()
+
       selectedProperties[name] = parseInt(value, 10)
 
     selectedProperties
