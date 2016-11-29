@@ -25,7 +25,20 @@ Or install it yourself as:
 
 ## Usage
 
-### Variants matrix input
+This gem comes with the following components, some usable in the admin panel
+others for the front.
+
+A. Admin :
+  1. [Variants matrix input](#1-variants-matrix-input)
+  2. [Carts view](#2-carts-view)
+
+B. Front :
+  1. [Variants select](#1-variants-select)
+
+
+## A. Admin
+
+### 1. Variants matrix input
 
 The `:variants_matrix` input allows to generate product variants based on
 different properties. For example, a t-shirt product may belong to a color
@@ -80,6 +93,25 @@ generating combinations to create variants.
 
 The form should display a field that'll allow you to select properties and
 edit variants when they're generated.
+
+### 2. Carts view
+
+Add a CRUD component for yout carts, and use the provided `para/stall/admin/carts`
+controller.
+
+```ruby
+component :carts, :crud, controller: '/para/stall/admin/carts'
+```
+
+Partials for the cart filters, table, and form are provided.
+Also, nested fields partials are provided for the customer, addresses, shipment,
+payment and line_item models.
+
+
+## B. Front
+
+### 3. Variants select
+
 
 ## Development
 

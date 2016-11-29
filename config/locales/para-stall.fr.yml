@@ -4,3 +4,12 @@ fr:
       variants_matrix:
         enabled: "Actif ?"
         price: "Prix"
+
+  forms:
+    tabs:
+      cart:
+        informations: "Informations"
+        billing: "Facturation"
+        shipping: "Livraison"
+        payment: "Paiement"
+        line_items: "Produits"

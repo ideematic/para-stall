@@ -5,13 +5,13 @@ require 'stall'
 require 'simple_form'
 
 require 'para/stall/inputs'
-
 require 'para/stall/engine'
 
 module Para
   module Stall
     extend ActiveSupport::Autoload
 
+    autoload :Routes
     autoload :VariantsPropertyConfig
 
     class << self
