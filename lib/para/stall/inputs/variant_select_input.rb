@@ -17,11 +17,16 @@ module Para
             attribute_name: attribute_name,
             foreign_key: foreign_key,
             properties: properties,
-            variants_data: variants_data
+            variants_data: variants_data,
+            price_selector: price_selector
           }
         end
 
         private
+
+        def price_selector
+          @price_selector ||= options[:price_selector] || '[data-sellable-price]'
+        end
 
         def product
           @product ||= options[:product]
@@ -53,7 +58,7 @@ module Para
 
         def variants_data
           @variants_data ||= variants.map do |variant|
-            { id: variant.id }.tap do |data|
+            { id: variant.id, price: template.number_to_currency(variant.price) }.tap do |data|
               properties.each do |property_config|
                 data[property_config.property_name] =
                   property_config.property_value_for(variant).id

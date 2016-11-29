@@ -110,7 +110,54 @@ payment and line_item models.
 
 ## B. Front
 
-### 3. Variants select
+### 1. Variants select
+
+Add to your application.js :
+
+```javascript
+//= require para/stall/inputs/variant-select
+```
+
+Then in your product's page, override the `add_to_cart` form and instead of
+the `:sellable_id` field, use the following `:variant_select` input
+
+```ruby
+= form.input_field :sellable, as: :variant_select, product: product, variants: variants, relation: :variants, properties: [:color, :size]
+```
+
+#### Options
+
+##### All the above options are required :
+
+- `:product` : The parent product, holding the variants
+- `:variants` : The variants array, allowing easy sellable-level eager loading
+of variants associated resources
+- `:relation` : The `has_many` relation name between the product and the
+variants
+- `:properties` : The different properties that you want to be able to select
+between to build the variants
+
+##### Overriding the rendered partial :
+
+- `:partial_path` : You can provide a path to a partial in your app to render
+the sellable selector. You can copy the partial from this gem to build your
+own.
+
+##### Automatic price update :
+
+- `:price_selector` : defaults to `[data-sellable-price]`. CSS selector
+targeting your sellable's price container, allowing to automatically update
+the displayed price of the sellable when a new variant is chosen from the
+properties of the field.
+
+Note that you must create this container yourself, anywhere in the page, with
+something like :
+
+```erb
+<div data-sellable-price>
+  <%= number_to_currency(product.price) %>
+</div>
+```
 
 
 ## Development

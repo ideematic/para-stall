@@ -1,4 +1,4 @@
-.variant-select-input{ data: { :'variant-select-input' => true, :'variant-select-data' => variants_data.to_json } }
+.variant-select-input{ data: { :'variant-select-input' => true, :'variant-select-data' => variants_data.to_json, :'price-target' => price_selector } }
   = form.hidden_field foreign_key, data: { :'variant-select-foreign-key' => true }
 
   - properties.each do |property_config|

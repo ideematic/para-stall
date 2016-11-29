@@ -6,7 +6,13 @@ class VariantSelectInput extends Vertebra.View
     @variants = @$el.data('variant-select-data')
     @$properties = @$('[data-variant-select-property]')
     @$foreignKey = @$('[data-variant-select-foreign-key]')
+    @preparePriceTarget()
     @refreshSelectedVariant()
+
+  preparePriceTarget: ->
+    @$priceTarget = $(@$el.data('price-target'))
+    return unless @$priceTarget.length
+    @originalPrice = @$priceTarget.html()
 
   onInputChanged: ->
     @refreshSelectedVariant()
@@ -44,6 +50,12 @@ class VariantSelectInput extends Vertebra.View
     value = if variant then variant.id else null
     @$foreignKey.val(value)
     @$foreignKey.trigger('change')
+    @updatePriceWith(variant)
+
+  updatePriceWith: (variant) ->
+    return unless @$priceTarget.length
+    price = if variant then variant.price else @originalPrice
+    @$priceTarget.html(price)
 
 $(document).on 'page:change turbolinks:load', ->
   $('[data-variant-select-input]').each (i, el) ->
