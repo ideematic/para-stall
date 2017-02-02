@@ -1,11 +1,12 @@
 class VariantsMatrix.Variant extends Vertebra.View
   events:
-    'change [data-variants-matrix-variant-enabled]': 'onEnabledStateChanged'
+    'change [data-variants-matrix-variant-published]': 'onPublishedStateChanged'
 
   initialize: (options = {}) ->
     @combination = options.combination
     @persisted = @$el?.data('variant-id')
     @input = options.input
+    @onPublishedStateChanged()
 
   renderTo: ($container) ->
     $variant = $(@input.nestedFieldsManager.render())
@@ -43,15 +44,6 @@ class VariantsMatrix.Variant extends Vertebra.View
     name: @input.nameForProperty(key, value)
     type: key
 
-  setEnabledState: (state) ->
-    @$('[data-variants-matrix-variant-enabled]')
-      .prop('checked', state)
-      .trigger('change')
-
-  onEnabledStateChanged: (e) ->
-    checked = @$('[data-variants-matrix-variant-enabled]').prop('checked')
-    @$el.toggleClass('disabled')
-    @setDestroyed(!checked)
-
-  setDestroyed: (state) ->
-    @$el.find('[data-variant-remove]').val(if state then 'true' else 'false')
+  onPublishedStateChanged: ->
+    checked = @$('[data-variants-matrix-variant-published]').prop('checked')
+    @$el.toggleClass('disabled', !checked)

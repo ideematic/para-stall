@@ -28,7 +28,6 @@ class VariantsMatrix.Input extends Vertebra.View
     for combination in combinations
       unless @findVariantFor(combination)
         variant = @createVariantFor(combination)
-        variant.setEnabledState(false)
 
   buildCombinationForRow: (row) ->
     combination = {}
